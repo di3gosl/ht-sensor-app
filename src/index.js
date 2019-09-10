@@ -5,6 +5,8 @@ import Dashboard from './components/Dashboard';
 import { Provider } from 'react-redux';
 import store from './store';
 
+require('dotenv').config();
+
 ReactDOM.render(
     <Provider store={store}>
         <Dashboard />

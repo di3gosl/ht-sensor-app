@@ -1,0 +1,12 @@
+.form-container {
+    .action-button {
+        border: 1px solid #333;
+        cursor: pointer;
+        padding: 3px 25px;
+        background-color: #fff;
+    }
+    .action-button:hover {
+        background-color: #333;
+        color: #fff;
+    }
+}

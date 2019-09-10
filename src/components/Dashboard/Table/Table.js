@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
+import PropTypes from 'prop-types';
 import './Table.scss';
 
-const Table = ({ sensors, changeDisplayMode }) => {
+const Table = ({ sensors, changeDisplayMode, showForm, setForm, isFetching }) => {
     const renderDisplayModeMenu = () => (
         <div className="float-right display-menu">
             View As:
@@ -10,6 +11,11 @@ const Table = ({ sensors, changeDisplayMode }) => {
             <div onClick={changeDisplayMode.bind(this, 1)}>List</div>
         </div>
     );
+
+    const loadSensor = (sensor) => {
+        setForm(sensor);
+        showForm();
+    }
 
     return (
         <div className="container-fluid table-container">
@@ -40,8 +46,10 @@ const Table = ({ sensors, changeDisplayMode }) => {
                                     <td className="actions">
                                         <i className="fas fa-clock" data-tip="View Data"></i>
                                         <ReactTooltip place="top" type="dark" effect="solid" />
-                                        <i className="fas fa-edit" data-tip="Edit Sensor"></i>
+                                        
+                                        <i className="fas fa-edit" data-tip="Edit Sensor" onClick={loadSensor.bind(this, sensor)}></i>
                                         <ReactTooltip place="top" type="dark" effect="solid" />
+
                                         <i className="fas fa-trash" data-tip="Delete Sensor"></i>
                                         <ReactTooltip place="top" type="dark" effect="solid" />
                                     </td>
@@ -53,6 +61,15 @@ const Table = ({ sensors, changeDisplayMode }) => {
             </div>
         </div>
     );
+}
+
+Table.propTypes = {
+    displayMode: PropTypes.number.isRequired,
+    sensors: PropTypes.array.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    changeDisplayMode: PropTypes.func.isRequired,
+    showForm: PropTypes.func.isRequired,
+    setForm: PropTypes.func.isRequired
 }
 
 export default Table;

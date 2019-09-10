@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Table from './Table';
+import Form from './Form';
 import { connect } from 'react-redux';
 import * as actions from './Dashboard.actions';
 import * as selectors from './Dashboard.selectors';
@@ -9,21 +10,30 @@ import './Dashboard.scss';
 
 class Dashboard extends Component {
     componentWillMount() {
-
+        const { fetchSensors } = this.props;
+        fetchSensors();
     }
 
     render() {
-        const { displayMode, changeDisplayMode, sensors } = this.props;
+        const { displayMode, changeDisplayMode, sensors, sensor, isFetching, showForm, showingForm, setForm, hideForm } = this.props;
         return (
             <div className="dashboard-container">
                 <Header />
                 <Table
                     sensors={sensors}
-                    changeDisplayMode={changeDisplayMode.bind(this)}
+                    showForm={showForm}
+                    setForm={setForm}
+                    isFetching={isFetching}
+                    changeDisplayMode={changeDisplayMode}
                 />
                 <div className="container-fluid">
                     <div className="float-right add-button"><i className="fas fa-plus-square"></i> Add</div>
                 </div>
+                <Form
+                    sensor={sensor}
+                    showingForm={showingForm}
+                    hideForm={hideForm}
+                />
             </div>
         );
     }
@@ -31,17 +41,31 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
     displayMode: PropTypes.number.isRequired,
+    sensors: PropTypes.array.isRequired,
+    sensor: PropTypes.object.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    showingForm: PropTypes.bool.isRequired,
     changeDisplayMode: PropTypes.func.isRequired,
-    sensors: PropTypes.array.isRequired
+    fetchSensors: PropTypes.func.isRequired,
+    showForm: PropTypes.func.isRequired,
+    hideForm: PropTypes.func.isRequired,
+    setForm: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
     displayMode: selectors.getDisplayMode(state),
-    sensors: selectors.getSensors(state)
+    sensors: selectors.getSensors(state),
+    sensor: selectors.getSensor(state),
+    isFetching: selectors.getIsFetching(state),
+    showingForm: selectors.getShowingForm(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    changeDisplayMode: (displayMode) => dispatch(actions.changeDisplayMode(displayMode))
+    changeDisplayMode: (displayMode) => dispatch(actions.changeDisplayMode(displayMode)),
+    fetchSensors: () => dispatch(actions.fetchSensors()),
+    showForm: () => dispatch(actions.showForm()),
+    hideForm: () => dispatch(actions.hideForm()),
+    setForm: (sensor) => dispatch(actions.setForm(sensor))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
