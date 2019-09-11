@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from './Header';
+import Header from './../Header';
 import Table from './Table';
 import Form from './Form';
 import { connect } from 'react-redux';
@@ -25,7 +25,9 @@ class Dashboard extends Component {
             setForm,
             hideForm,
             setField,
-            saveSensor } = this.props;
+            saveSensor,
+            deleteSensor,
+            isSaving } = this.props;
 
         const addSensor = () => {
             setForm({ code: '', name: '' });
@@ -41,6 +43,7 @@ class Dashboard extends Component {
                     setForm={setForm}
                     isFetching={isFetching}
                     changeDisplayMode={changeDisplayMode}
+                    deleteSensor={deleteSensor}
                 />
                 <div className="container-fluid">
                     <div className="float-right add-button" onClick={addSensor}><i className="fas fa-plus-square"></i> Add</div>
@@ -51,6 +54,7 @@ class Dashboard extends Component {
                     hideForm={hideForm}
                     setField={setField}
                     saveSensor={saveSensor}
+                    isSaving={isSaving}
                 />
             </div>
         );
@@ -68,7 +72,10 @@ Dashboard.propTypes = {
     showForm: PropTypes.func.isRequired,
     hideForm: PropTypes.func.isRequired,
     setForm: PropTypes.func.isRequired,
-    setField: PropTypes.func.isRequired
+    setField: PropTypes.func.isRequired,
+    deleteSensor: PropTypes.func.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    isDeleting: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -76,7 +83,9 @@ const mapStateToProps = state => ({
     sensors: selectors.getSensors(state),
     sensor: selectors.getSensor(state),
     isFetching: selectors.getIsFetching(state),
-    showingForm: selectors.getShowingForm(state)
+    showingForm: selectors.getShowingForm(state),
+    isSaving: selectors.getIsSaving(state),
+    isDeleting: selectors.getIsDeleting(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -86,7 +95,8 @@ const mapDispatchToProps = (dispatch) => ({
     hideForm: () => dispatch(actions.hideForm()),
     setForm: (sensor) => dispatch(actions.setForm(sensor)),
     setField: (name, value) => dispatch(actions.setField(name, value)),
-    saveSensor: () => dispatch(actions.saveSensor())
+    saveSensor: () => dispatch(actions.saveSensor()),
+    deleteSensor: (code) => dispatch(actions.deleteSensor(code))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

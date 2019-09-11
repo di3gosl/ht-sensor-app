@@ -26,3 +26,13 @@ export const getShowingForm = createSelector(
     getComponentState,
     (state) => state.showingForm
 );
+
+export const getIsSaving = createSelector(
+    getComponentState,
+    (state) => state.isSaving
+);
+
+export const getIsDeleting = createSelector(
+    getComponentState,
+    (state) => state.isDeleting
+);

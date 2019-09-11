@@ -58,7 +58,7 @@ export const saveSensor = () => (dispatch, getState) => {
     if (sensor.code === '' || sensor.name === '') {
         showNotification(
             'Complete Data',
-            'Fill all the fields before continue',
+            'Fill all the fields before continue.',
             'info'
         );
         return;
@@ -76,6 +76,27 @@ export const saveSensor = () => (dispatch, getState) => {
         })
         .catch((error) => {
             dispatch({ type: types.SAVE_SENSOR_ERROR, payload: null });
+            showNotification(
+                'Error',
+                'An error has occurred saving the data',
+                'danger'
+            );
+        });
+}
+
+export const deleteSensor = (code) => dispatch => {
+    dispatch({ type: types.DELETE_SENSOR, payload: null });
+    axios.delete('http://pokeapi.co/api/v2/pokemon/' + code)
+        .then((response) => {
+            dispatch({ type: types.DELETE_SENSOR_SUCCESS, payload: code });
+            showNotification(
+                'Data Deleted!',
+                'Your data has been deleted successfully!',
+                'success'
+            );
+        })
+        .catch((error) => {
+            dispatch({ type: types.DELETE_SENSOR_ERROR, payload: null });
             showNotification(
                 'Error',
                 'An error has occurred saving the data',

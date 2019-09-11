@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import './Table.scss';
 
-const Table = ({ sensors, changeDisplayMode, showForm, setForm, isFetching }) => {
+const Table = ({ sensors, changeDisplayMode, showForm, setForm, isFetching, deleteSensor }) => {
     const renderDisplayModeMenu = () => (
         <div className="float-right display-menu">
             View As:
@@ -44,13 +45,13 @@ const Table = ({ sensors, changeDisplayMode, showForm, setForm, isFetching }) =>
                                     <td>{sensor.temperature} °C</td>
                                     <td>{sensor.humidity}%</td>
                                     <td className="actions">
-                                        <i className="fas fa-clock" data-tip="View Data"></i>
+                                        <Link to={'/data/' + sensor.code}><i className="fas fa-clock" data-tip="View Data"></i></Link>
                                         <ReactTooltip place="top" type="dark" effect="solid" />
-                                        
+
                                         <i className="fas fa-edit" data-tip="Edit Sensor" onClick={loadSensor.bind(this, sensor)}></i>
                                         <ReactTooltip place="top" type="dark" effect="solid" />
 
-                                        <i className="fas fa-trash" data-tip="Delete Sensor"></i>
+                                        <i className="fas fa-trash" data-tip="Delete Sensor" onClick={deleteSensor.bind(this, sensor.code)}></i>
                                         <ReactTooltip place="top" type="dark" effect="solid" />
                                     </td>
                                 </tr>
@@ -68,7 +69,8 @@ Table.propTypes = {
     isFetching: PropTypes.bool.isRequired,
     changeDisplayMode: PropTypes.func.isRequired,
     showForm: PropTypes.func.isRequired,
-    setForm: PropTypes.func.isRequired
+    setForm: PropTypes.func.isRequired,
+    deleteSensor: PropTypes.func.isRequired
 }
 
 export default Table;

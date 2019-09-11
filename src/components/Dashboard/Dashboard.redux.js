@@ -12,6 +12,7 @@ const initialState = {
     sensor: { code: '', name: '' },
     isFetching: false,
     isSaving: false,
+    isDeleting: false,
     showingForm: false
 }
 
@@ -57,6 +58,17 @@ export default function (state = initialState, action) {
 
         case types.SAVE_SENSOR_ERROR:
             return state.setIn(['isSaving'], false).toJS();
+            
+        case types.DELETE_SENSOR:
+            return state.setIn(['isDeleting'], true).toJS();
+
+        case types.DELETE_SENSOR_SUCCESS:
+            return state.updateIn(['sensors'], sensors => sensors.delete(sensors.findIndex(sensor => sensor.code === action.payload),))
+                .setIn(['isDeleting'], false)
+                .toJS();
+
+        case types.DELETE_SENSOR_ERROR:
+            return state.setIn(['isDeleting'], false).toJS();
 
         default:
             return state.toJS();

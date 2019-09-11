@@ -10,7 +10,7 @@ export const showNotification = (title, message, type) => {
         animationIn: ["animated", "fadeIn"],
         animationOut: ["animated", "fadeOut"],
         dismiss: {
-            duration: 5000,
+            duration: 3000,
             onScreen: true
         }
     });

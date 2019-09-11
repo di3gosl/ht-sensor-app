@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Modal } from 'react-bootstrap';
 import './Form.scss';
 
-const Form = ({ hideForm, sensor, showingForm, setField, saveSensor }) => {
+const Form = ({ hideForm, sensor, showingForm, setField, saveSensor, isSaving }) => {
     const renderTextInput = (label, name) => (
         <div className="form-field">
             <label htmlFor={name}>{label}:</label>
@@ -25,7 +25,9 @@ const Form = ({ hideForm, sensor, showingForm, setField, saveSensor }) => {
             </Modal.Body>
             <Modal.Footer>
                 <button type="button" className="action-button" onClick={hideForm}>Close</button>
-                <button type="button" className="action-button" onClick={saveSensor}>Save</button>
+                <button type="button" className="action-button" onClick={saveSensor}>
+                    {isSaving ? <i className="fas fa-circle-notch fa-spin"></i> : 'Save'}
+                </button>
             </Modal.Footer>
         </Modal>
     );
@@ -36,7 +38,8 @@ Form.propTypes = {
     sensor: PropTypes.object.isRequired,
     hideForm: PropTypes.func.isRequired,
     setField: PropTypes.func.isRequired,
-    saveSensor: PropTypes.func.isRequired
+    saveSensor: PropTypes.func.isRequired,
+    isSaving: PropTypes.bool.isRequired
 }
 
 export default Form;
