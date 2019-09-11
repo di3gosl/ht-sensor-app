@@ -9,8 +9,9 @@ const initialState = {
         { code: 'lab-001', name: 'Laboratory', temperature: 25.5, humidity: 45 },
     ],
     displayMode: 1,
-    sensor: { code: '', name: '', temperature: '', humidity: '' },
+    sensor: { code: '', name: '' },
     isFetching: false,
+    isSaving: false,
     showingForm: false
 }
 
@@ -18,8 +19,7 @@ export default function (state = initialState, action) {
     state = Immutable.fromJS(state);
     switch (action.type) {
         case types.CHANGE_DISPLAY_MODE:
-            return state.setIn(['displayMode'], action.payload)
-                .toJS();
+            return state.setIn(['displayMode'], action.payload).toJS();
 
         case types.FETCH_SENSORS:
             return state.setIn(['sensors'], [])
@@ -32,20 +32,31 @@ export default function (state = initialState, action) {
                 .toJS();
 
         case types.FETCH_SENSORS_ERROR:
-            return state.setIn(['isFetching'], false)
-                .toJS();
+            return state.setIn(['isFetching'], false).toJS();
 
         case types.SHOW_FORM:
-            return state.setIn(['showingForm'], true)
-                .toJS();
+            return state.setIn(['showingForm'], true).toJS();
 
         case types.HIDE_FORM:
-            return state.setIn(['showingForm'], false)
-                .toJS();
+            return state.setIn(['showingForm'], false).toJS();
 
         case types.SET_FORM:
-            return state.setIn(['sensor'], action.payload)
+            return state.setIn(['sensor'], action.payload).toJS();
+
+        case types.SET_FIELD:
+            return state.setIn(['sensor', action.payload.name], action.payload.value).toJS();
+
+        case types.SAVE_SENSOR:
+            return state.setIn(['isSaving'], true).toJS();
+
+        case types.SAVE_SENSOR_SUCCESS:
+            return state.setIn(['sensor'], { code: '', name: '' })
+                .updateIn(['sensors'], sensors => sensors.push(action.payload))
+                .setIn(['isSaving'], false)
                 .toJS();
+
+        case types.SAVE_SENSOR_ERROR:
+            return state.setIn(['isSaving'], false).toJS();
 
         default:
             return state.toJS();

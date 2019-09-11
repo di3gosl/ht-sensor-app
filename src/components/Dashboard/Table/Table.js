@@ -15,7 +15,7 @@ const Table = ({ sensors, changeDisplayMode, showForm, setForm, isFetching }) =>
     const loadSensor = (sensor) => {
         setForm(sensor);
         showForm();
-    }
+    };
 
     return (
         <div className="container-fluid table-container">
@@ -64,7 +64,6 @@ const Table = ({ sensors, changeDisplayMode, showForm, setForm, isFetching }) =>
 }
 
 Table.propTypes = {
-    displayMode: PropTypes.number.isRequired,
     sensors: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
     changeDisplayMode: PropTypes.func.isRequired,

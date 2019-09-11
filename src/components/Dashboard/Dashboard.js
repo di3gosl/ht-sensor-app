@@ -15,7 +15,23 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { displayMode, changeDisplayMode, sensors, sensor, isFetching, showForm, showingForm, setForm, hideForm } = this.props;
+        const {
+            changeDisplayMode,
+            sensors,
+            sensor,
+            isFetching,
+            showForm,
+            showingForm,
+            setForm,
+            hideForm,
+            setField,
+            saveSensor } = this.props;
+
+        const addSensor = () => {
+            setForm({ code: '', name: '' });
+            showForm();
+        };
+
         return (
             <div className="dashboard-container">
                 <Header />
@@ -27,12 +43,14 @@ class Dashboard extends Component {
                     changeDisplayMode={changeDisplayMode}
                 />
                 <div className="container-fluid">
-                    <div className="float-right add-button"><i className="fas fa-plus-square"></i> Add</div>
+                    <div className="float-right add-button" onClick={addSensor}><i className="fas fa-plus-square"></i> Add</div>
                 </div>
                 <Form
                     sensor={sensor}
                     showingForm={showingForm}
                     hideForm={hideForm}
+                    setField={setField}
+                    saveSensor={saveSensor}
                 />
             </div>
         );
@@ -49,7 +67,8 @@ Dashboard.propTypes = {
     fetchSensors: PropTypes.func.isRequired,
     showForm: PropTypes.func.isRequired,
     hideForm: PropTypes.func.isRequired,
-    setForm: PropTypes.func.isRequired
+    setForm: PropTypes.func.isRequired,
+    setField: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -65,7 +84,9 @@ const mapDispatchToProps = (dispatch) => ({
     fetchSensors: () => dispatch(actions.fetchSensors()),
     showForm: () => dispatch(actions.showForm()),
     hideForm: () => dispatch(actions.hideForm()),
-    setForm: (sensor) => dispatch(actions.setForm(sensor))
+    setForm: (sensor) => dispatch(actions.setForm(sensor)),
+    setField: (name, value) => dispatch(actions.setField(name, value)),
+    saveSensor: () => dispatch(actions.saveSensor())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

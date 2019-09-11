@@ -9,4 +9,15 @@
         background-color: #333;
         color: #fff;
     }
+    .form-field {
+        margin-bottom: 15px;
+        label {
+            width: 100%;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 1px 5px;
+            margin-top: -5px;
+        }
+    }
 }
