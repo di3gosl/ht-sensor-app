@@ -2,9 +2,9 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import './Table.scss';
+import './Cards.scss';
 
-const Table = ({ sensors, changeDisplayMode, showForm, setForm, isFetching, deleteSensor }) => {
+const Cards = ({ sensors, changeDisplayMode, showForm, setForm, isFetching, deleteSensor }) => {
     const renderDisplayModeMenu = () => (
         <div className="float-right display-menu">
             View As:
@@ -27,52 +27,44 @@ const Table = ({ sensors, changeDisplayMode, showForm, setForm, isFetching, dele
     }
 
     return (
-        <div className="container-fluid table-container">
+        <div className="container-fluid cards-container">
             <div className="row">
                 <div className="col">
                     <h4 className="float-left">Sensors List</h4>
                     {renderDisplayModeMenu()}
                 </div>
                 <div className="w-100"></div>
-                <div className="col">
-                    <table className="table table-sm table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Code</th>
-                                <th>Name</th>
-                                <th>Temperature</th>
-                                <th>Relative Humidity</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {sensors.map((sensor) => (
-                                <tr key={sensor.code}>
-                                    <td>{sensor.code}</td>
-                                    <td>{sensor.name}</td>
-                                    <td className="temperature"><i className="fas fa-thermometer-half"></i> {sensor.temperature} °C</td>
-                                    <td className="humidity"><i className="fas fa-tint"></i> {sensor.humidity}%</td>
-                                    <td className="actions">
+                {sensors.map((sensor) => (
+                    <div className="col-3">
+                        <div className="card" key={sensor.code}>
+                            <div className="card-header">{sensor.name} ({sensor.code})</div>
+                            <div className="card-body">
+                                <div className="temperature"><i className="fas fa-thermometer-half"></i> {sensor.temperature} °C</div>
+                                <div className="humidity"><i className="fas fa-tint"></i> {sensor.humidity}%</div>
+                                <div className="icons-container">
+                                    <div className="icon">
                                         <Link to={'/data/' + sensor.code}><i className="fas fa-clock" data-tip="View Data"></i></Link>
                                         <ReactTooltip place="top" type="dark" effect="solid" />
-
+                                    </div>
+                                    <div className="icon">
                                         <i className="fas fa-edit" data-tip="Edit Sensor" onClick={loadSensor.bind(this, sensor)}></i>
                                         <ReactTooltip place="top" type="dark" effect="solid" />
-
+                                    </div>
+                                    <div className="icon">
                                         <i className="fas fa-trash" data-tip="Delete Sensor" onClick={deleteSensor.bind(this, sensor.code)}></i>
                                         <ReactTooltip place="top" type="dark" effect="solid" />
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );
 }
 
-Table.propTypes = {
+Cards.propTypes = {
     sensors: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
     changeDisplayMode: PropTypes.func.isRequired,
@@ -81,4 +73,4 @@ Table.propTypes = {
     deleteSensor: PropTypes.func.isRequired
 }
 
-export default Table;
+export default Cards;

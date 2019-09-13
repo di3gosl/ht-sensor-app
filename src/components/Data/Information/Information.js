@@ -5,6 +5,14 @@ import { Link } from 'react-router-dom';
 import './Information.scss';
 
 const Information = ({ sensor, isFetching }) => {
+    if(isFetching) {
+        return (
+            <div className="loading-icon">
+                <i className="fas fa-circle-notch fa-spin"></i> <span>Loading...</span>
+            </div>
+        );
+    }
+    
     const temperatureData = {
         labels: ['1', '2', '3', '4', '5', '6', '7'],
         datasets: [
@@ -72,12 +80,12 @@ const Information = ({ sensor, isFetching }) => {
                 <div className="col">
                     <div className="card">
                         <div className="card-header">Temperature</div>
-                        <div className="card-body temperature">25 °C</div>
+                        <div className="card-body temperature"><i className="fas fa-thermometer-half"></i> 25 °C</div>
                         <Line data={temperatureData} />
                     </div>
                     <div className="card">
                         <div className="card-header">Humidity</div>
-                        <div className="card-body humidity">50%</div>
+                        <div className="card-body humidity"><i className="fas fa-tint"></i> 50%</div>
                         <Line data={humidityData} />
                     </div>
                 </div>

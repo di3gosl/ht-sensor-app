@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './../Header';
 import Table from './Table';
+import Cards from './Cards';
 import Form from './Form';
 import { connect } from 'react-redux';
 import * as actions from './Dashboard.actions';
@@ -16,6 +17,7 @@ class Dashboard extends Component {
 
     render() {
         const {
+            displayMode,
             changeDisplayMode,
             sensors,
             sensor,
@@ -37,16 +39,24 @@ class Dashboard extends Component {
         return (
             <div className="dashboard-container">
                 <Header />
-                <Table
+                {displayMode === 1 && <Cards
                     sensors={sensors}
                     showForm={showForm}
                     setForm={setForm}
                     isFetching={isFetching}
                     changeDisplayMode={changeDisplayMode}
                     deleteSensor={deleteSensor}
-                />
+                />}
+                {displayMode === 2 && <Table
+                    sensors={sensors}
+                    showForm={showForm}
+                    setForm={setForm}
+                    isFetching={isFetching}
+                    changeDisplayMode={changeDisplayMode}
+                    deleteSensor={deleteSensor}
+                />}
                 <div className="container-fluid">
-                    <div className="float-right add-button" onClick={addSensor}><i className="fas fa-plus-square"></i> Add</div>
+                    {!isFetching && <div className="float-right add-button" onClick={addSensor}><i className="fas fa-plus-square"></i> Add</div>}
                 </div>
                 <Form
                     sensor={sensor}
