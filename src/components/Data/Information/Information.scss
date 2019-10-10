@@ -1,0 +1,26 @@
+.information-container {
+  .card {
+    text-align: center;
+    margin-bottom: 15px;
+    width: calc(50% - 15px);
+    float: left;
+    .card-header {
+      font-size: 24px;
+    }
+    .card-body {
+      font-size: 48px;
+    }
+    .card-body.temperature {
+      color: #f44336;
+    }
+    .card-body.humidity {
+      color: #2196f3;
+    }
+  }
+  .card:first-child {
+    margin-right: 15px;
+  }
+  .card:last-child {
+    margin-left: 15px;
+  }
+}
