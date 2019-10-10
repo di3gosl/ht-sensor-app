@@ -1,0 +1,11 @@
+.dashboard-container {
+    .add-button {
+        border: 1px solid #333;
+        cursor: pointer;
+        padding: 3px 25px;
+    }
+    .add-button:hover {
+        background-color: #333;
+        color: #fff;
+    }
+}

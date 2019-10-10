@@ -1,0 +1,46 @@
+.table-container {
+  h4 {
+    margin-top: 15px;
+  }
+  .display-menu {
+    margin-top: 25px;
+    div {
+      float: right;
+      cursor: pointer;
+      color: #0091ea;
+      margin-left: 15px;
+    }
+    div:hover {
+        text-decoration: underline;
+    }
+  }
+  table {
+    th {
+      font-weight: normal;
+    }
+    td.actions {
+      text-align: center;
+      i {
+        cursor: pointer;
+        font-size: 18px;
+        margin-right: 15px;
+        color: #333;
+      }
+      i.fa-edit:hover {
+        color: #1565c0;
+      }
+      i.fa-trash:hover {
+        color: #c62828;
+      }
+      i.fa-clock:hover {
+        color: #2e7d32;
+      }
+    }
+    td.temperature {
+      color: #f44336;
+    }
+    td.humidity {
+      color: #2196f3;
+    }
+  }
+}
